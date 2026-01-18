@@ -1,6 +1,6 @@
 # Tesla Dashboard Clone
 
-Ever wondered what it feels like to sit in the driver’s seat of a Tesla without actually touching the wheel? Well, now you can—virtually. This is my static Tesla Dashboard project, built as a frontend showcase for my portfolio. It’s sleek, interactive, and, honestly, a lot of fun to tinker with.
+Ever wondered what it feels like to sit in the driver’s seat of a Tesla without actually touching the wheel? Well, now you can virtually. This is my static Tesla Dashboard project, built as a frontend showcase for my portfolio. It’s sleek, interactive, and, honestly, a lot of fun to tinker with.
 
 You can check it out live here: [Tesla Dashboard Live](https://tesla-dashboard-two.vercel.app)
 
@@ -12,7 +12,7 @@ At first glance, it might just look like a fancy 3D dashboard. But if you look c
 
 Here’s the thing: making something feel alive in the browser is trickier than it seems. I used **React Three Fiber** to handle the 3D graphics. It’s basically React, but for 3D scenes, so you get the declarative power of React while the GPU does the heavy lifting. Then there’s **Three.js**, quietly running under the hood, making sure that rotations, lights, and shadows behave realistically.
 
-And yes, the controls are fully interactive. Click a button and the state updates immediately—you’ll see the frunk pop open (virtually), climate fan spin, or the gear switch from “P” to “D.” It’s satisfying, I promise.
+And yes, the controls are fully interactive. Click a button and the state updates immediately you’ll see the frunk pop open (virtually), climate fan spin, or the gear switch from “P” to “D.” It’s satisfying, I promise.
 
 ---
 
@@ -26,7 +26,7 @@ If you’re into frontend development, UI design, or just shiny 3D stuff, this p
 - **Modern Styling**: Tailwind CSS for rapid styling, dark theme vibes, and subtle blurs/transitions.  
 - **Performance Minded**: Only necessary re-renders, optimized 3D rendering, and lightweight canvas setup.
 
-It’s basically a mini playground to show that a web page can feel like an actual Tesla dashboard—without the steering wheel or autopilot (yet).
+It’s basically a mini playground to show that a web page can feel like an actual Tesla dashboard without the steering wheel or autopilot (yet).
 
 ---
 
@@ -65,6 +65,6 @@ Basically, it’s a playground. You tweak it, push it, and see what feels alive.
 
 ---
 
-If you’re curious, just open it up and click around. You’ll see—it’s more than just a static 3D model. It’s interactive, alive, and, dare I say, a bit fun to play with.
+If you’re curious, just open it up and click around. You’ll see it’s more than just a static 3D model. It’s interactive, alive, and, dare I say, a bit fun to play with.
 
 [Live Demo](https://tesla-dashboard-two.vercel.app)
