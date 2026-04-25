@@ -5,7 +5,7 @@ A premium, interactive 3D dashboard for the Tesla Cybertruck, built with **React
 ![Tesla Dashboard Preview](./tesla-cybertruck.png)
 
 ## 🚀 Live Demo
-[View Live Project](https://tesla-cybertruck-dashboard.vercel.app/) *(Placeholder)*
+[View Live Project](https://tesla-dashboard-ivory.vercel.app) *(Placeholder)*
 
 ## ✨ Key Features
 
