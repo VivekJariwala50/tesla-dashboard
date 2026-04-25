@@ -6,8 +6,9 @@ import {
   ContactShadows,
   useGLTF,
 } from "@react-three/drei";
-import { Battery, Fan, Music, Lock, MapPin, Zap, Menu } from "lucide-react";
+import { Battery, Fan, Music, Lock, MapPin, Zap, Menu, Lightbulb, Shield, Settings } from "lucide-react";
 import * as THREE from "three";
+import { Cybertruck3D } from "./components/Cybertruck3D";
 
 // --- Types ---
 type Gear = "P" | "R" | "N" | "D";
@@ -19,6 +20,7 @@ interface CarState {
   isLocked: boolean;
   climateOn: boolean;
   frunkOpen: boolean;
+  lightsOn: boolean;
   gear: Gear;
 }
 
@@ -31,35 +33,7 @@ interface ControlButtonProps {
 
 // --- 3D Components ---
 
-// 1. Optimized Cybertruck Component
-const Cybertruck3D = ({
-  isMoving,
-  openFrunk,
-}: {
-  isMoving: boolean;
-  openFrunk: boolean;
-}) => {
-  const { scene } = useGLTF("/models/cybertruck.glb");
-  const truckRef = useRef<THREE.Group>(null);
-
-  // Animation Loop (Runs outside React render cycle)
-  useFrame((state, delta) => {
-    if (isMoving && truckRef.current) {
-      truckRef.current.rotation.y += delta * 0.5;
-    }
-  });
-
-  return (
-    <primitive
-      ref={truckRef}
-      object={scene}
-      scale={0.75}
-      position={[0, -0.2, 0]}
-    />
-  );
-};
-
-// 2. Responsive Camera
+// Responsive Camera
 const ResponsiveCamera = React.memo(() => {
   const { camera, size } = useThree();
   useEffect(() => {
@@ -122,6 +96,7 @@ export default function CybertruckDashboard() {
     isLocked: true,
     climateOn: false,
     frunkOpen: false,
+    lightsOn: false,
     gear: "P",
   });
 
@@ -136,6 +111,10 @@ export default function CybertruckDashboard() {
   );
   const toggleFrunk = useCallback(
     () => setCarState((p) => ({ ...p, frunkOpen: !p.frunkOpen })),
+    []
+  );
+  const toggleLights = useCallback(
+    () => setCarState((p) => ({ ...p, lightsOn: !p.lightsOn })),
     []
   );
   const setGear = useCallback(
@@ -191,7 +170,7 @@ export default function CybertruckDashboard() {
 
             <Cybertruck3D
               isMoving={carState.speed > 0}
-              openFrunk={carState.frunkOpen}
+              lightsOn={carState.lightsOn}
             />
 
             <ContactShadows opacity={0.5} blur={2} scale={15} />
@@ -230,9 +209,15 @@ export default function CybertruckDashboard() {
             onClick={() => {}}
           />
           <ControlButton
+            label="Lights"
+            active={carState.lightsOn}
+            icon={<Lightbulb size={20} />}
+            onClick={toggleLights}
+          />
+          <ControlButton
             label="Frunk"
             active={carState.frunkOpen}
-            icon={<span className="text-xs font-bold">Frunk</span>}
+            icon={<span className="text-xs font-bold uppercase tracking-tighter">Frunk</span>}
             onClick={toggleFrunk}
           />
         </div>
@@ -240,22 +225,58 @@ export default function CybertruckDashboard() {
 
       {/* Right Column */}
       <div className="flex-1 flex flex-col bg-[#121212] overflow-y-auto">
-        <div className="flex-1 m-3 md:m-5 rounded-2xl bg-[#1a1a1a] relative flex items-center justify-center">
-          <div className="text-center px-6">
-            <MapPin size={36} className="mx-auto text-blue-500 mb-3" />
-            <h2 className="text-xl md:text-3xl font-light text-gray-200">
+        <div className="flex-1 m-3 md:m-5 rounded-3xl bg-[#1a1a1a] relative overflow-hidden group">
+          {/* Animated Map Gradient Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/10 opacity-50"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/5 to-transparent"></div>
+          
+          {/* Grid Pattern Overlay */}
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "40px 40px" }}></div>
+
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+            <div className="w-20 h-20 rounded-full bg-blue-500/10 flex items-center justify-center mb-6 border border-blue-500/20 shadow-[0_0_30px_rgba(59,130,246,0.2)]">
+              <MapPin size={40} className="text-blue-500 animate-bounce" />
+            </div>
+            <h2 className="text-2xl md:text-4xl font-light text-white tracking-tight">
               Navigate to HQ
             </h2>
-            <p className="text-gray-500 mt-2">3500 Deer Creek Rd, Palo Alto</p>
+            <p className="text-gray-400 mt-3 text-lg font-light max-w-xs">
+              3500 Deer Creek Rd, Palo Alto, CA
+            </p>
+            <div className="mt-8 flex gap-4">
+              <button className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-full text-sm font-medium transition-all shadow-lg shadow-blue-900/20 active:scale-95">
+                Start Route
+              </button>
+              <button className="px-6 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-full text-sm font-medium transition-all active:scale-95">
+                Overview
+              </button>
+            </div>
           </div>
-          <div className="hidden md:block absolute top-8 left-8">
-            <div className="text-8xl font-light">
-              {speedDisplay}
-              <span className="text-2xl ml-2 text-gray-500">MPH</span>
+
+          {/* Speed Overlay */}
+          <div className="hidden md:block absolute top-10 left-10 z-20">
+            <div className="flex items-baseline gap-2">
+              <div className="text-[120px] leading-none font-thin text-white tracking-tighter">
+                {speedDisplay}
+              </div>
+              <div className="text-3xl text-gray-500 font-light tracking-widest">MPH</div>
             </div>
-            <div className="text-gray-500 uppercase tracking-widest text-sm">
-              {carState.gear === "P" ? "Parked" : "Driving"}
+            <div className="flex items-center gap-2 mt-2">
+               <div className={`w-2 h-2 rounded-full ${carState.gear === 'P' ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`}></div>
+               <div className="text-gray-400 uppercase tracking-[0.3em] text-xs font-bold">
+                 {carState.gear === "P" ? "Parked" : carState.gear === "D" ? "Autopilot Active" : "Driving"}
+               </div>
             </div>
+          </div>
+
+          {/* Bottom Right Widgets */}
+          <div className="absolute bottom-8 right-8 z-20 flex gap-3">
+             <div className="w-12 h-12 rounded-xl bg-black/40 backdrop-blur-md border border-white/5 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer transition-colors">
+                <Shield size={20} />
+             </div>
+             <div className="w-12 h-12 rounded-xl bg-black/40 backdrop-blur-md border border-white/5 flex items-center justify-center text-gray-400 hover:text-white cursor-pointer transition-colors">
+                <Settings size={20} />
+             </div>
           </div>
         </div>
 
