@@ -44,12 +44,6 @@ A premium, interactive 3D dashboard for the Tesla Cybertruck, built with **React
     npm run build
     ```
 
-## 📸 Screenshots
-
-| Dashboard Overview | 3D Controls | Navigation |
-| :--- | :--- | :--- |
-| ![Dash](https://raw.githubusercontent.com/pmndrs/drei-assets/master/screens/screenshot-1.png) | ![Controls](https://raw.githubusercontent.com/pmndrs/drei-assets/master/screens/screenshot-2.png) | ![Nav](https://raw.githubusercontent.com/pmndrs/drei-assets/master/screens/screenshot-3.png) |
-
 ## 📄 License
 MIT License. Feel free to use this project for your own portfolio!
 
