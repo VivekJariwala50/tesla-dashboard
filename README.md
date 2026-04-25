@@ -2,7 +2,7 @@
 
 A premium, interactive 3D dashboard for the Tesla Cybertruck, built with **React**, **Three.js**, and **Tailwind CSS**. This project features a fully interactive 3D model, real-time status monitoring, and a sleek, glassmorphic UI.
 
-![Tesla Dashboard Preview](https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&q=80&w=2000)
+![Tesla Dashboard Preview](./tesla-cybertruck.png)
 
 ## 🚀 Live Demo
 [View Live Project](https://tesla-cybertruck-dashboard.vercel.app/) *(Placeholder)*
